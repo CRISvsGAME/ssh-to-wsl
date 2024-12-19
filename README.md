@@ -61,9 +61,23 @@ if ($NetFirewallRule) {
     }
 } else {
     Write-Host "Firewall Rule '$Name' is not found. Creating new rule..."
+
     New-NetFirewallRule -Name $Name -DisplayName $DisplayName `
     -Action $Action -Direction $Direction -Enabled $Enabled `
     -LocalPort $LocalPort -Protocol $Protocol
+
     Write-Host "Firewall Rule '$Name' is created successfully."
 }
+
+$ListenAddress = "0.0.0.0"
+$ListenPort = "22"
+$ConnectAddress = (wsl hostname -I).Split(" ")[0].Trim()
+$ConnectPort = "22"
+
+Write-Host "PortProxy Rule 'SSH to WSL'. Creating new rule..."
+
+netsh interface portproxy add v4tov4 listenaddress=$ListenAddress `
+listenport=$ListenPort connectaddress=$ConnectAddress connectport=$ConnectPort
+
+Write-Host "PortProxy Rule 'SSH to WSL' is created successfully."
 ```
