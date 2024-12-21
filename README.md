@@ -81,3 +81,12 @@ listenport=$ListenPort connectaddress=$ConnectAddress connectport=$ConnectPort
 
 Write-Host "PortProxy Rule 'SSH to WSL' is created successfully."
 ```
+
+### Bash
+
+```
+sudo apt-get update
+sudo apt-get -y install openssh-server
+sudo systemctl enable ssh
+sudo systemctl start ssh
+```
